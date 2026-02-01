@@ -1,4 +1,5 @@
 using Amaris.Core.Services;
+using FluentAssertions;
 
 namespace Amaris.Core.Tests.Services;
 
@@ -11,7 +12,7 @@ public class CalculatorServiceTests
     {
         var result = _sut.Add(3, 5);
 
-        Assert.Equal(8, result);
+        result.Should().Be(8);
     }
 
     [Theory]
@@ -22,7 +23,7 @@ public class CalculatorServiceTests
     {
         var result = _sut.Subtract(a, b);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Theory]
@@ -33,7 +34,7 @@ public class CalculatorServiceTests
     {
         var result = _sut.Multiply(a, b);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
@@ -41,13 +42,15 @@ public class CalculatorServiceTests
     {
         var result = _sut.Divide(10, 2);
 
-        Assert.Equal(5, result);
+        result.Should().Be(5);
     }
 
     [Fact]
     public void Divide_ByZero_ThrowsDivideByZeroException()
     {
-        Assert.Throws<DivideByZeroException>(() => _sut.Divide(10, 0));
+        var act = () => _sut.Divide(10, 0);
+
+        act.Should().Throw<DivideByZeroException>();
     }
 
     [Theory]
@@ -59,12 +62,14 @@ public class CalculatorServiceTests
     {
         var result = _sut.Factorial(input);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact]
     public void Factorial_NegativeNumber_ThrowsArgumentOutOfRangeException()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => _sut.Factorial(-1));
+        var act = () => _sut.Factorial(-1);
+
+        act.Should().Throw<ArgumentOutOfRangeException>();
     }
 }

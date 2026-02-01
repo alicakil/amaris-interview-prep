@@ -1,4 +1,4 @@
-namespace Amaris.Data.Repositories;
+namespace Amaris.Core.Repositories;
 
 public interface IRepository<T> where T : class
 {

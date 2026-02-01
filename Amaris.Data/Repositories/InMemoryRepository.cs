@@ -1,4 +1,5 @@
 using Amaris.Core.Models;
+using Amaris.Core.Repositories;
 
 namespace Amaris.Data.Repositories;
 

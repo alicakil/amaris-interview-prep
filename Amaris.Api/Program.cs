@@ -1,4 +1,5 @@
 using Amaris.Core.Models;
+using Amaris.Core.Repositories;
 using Amaris.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);

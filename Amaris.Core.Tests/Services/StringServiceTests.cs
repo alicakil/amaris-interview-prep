@@ -1,4 +1,5 @@
 using Amaris.Core.Services;
+using FluentAssertions;
 
 namespace Amaris.Core.Tests.Services;
 
@@ -11,7 +12,7 @@ public class StringServiceTests
     {
         var result = _sut.Reverse("hello");
 
-        Assert.Equal("olleh", result);
+        result.Should().Be("olleh");
     }
 
     [Fact]
@@ -19,13 +20,15 @@ public class StringServiceTests
     {
         var result = _sut.Reverse(string.Empty);
 
-        Assert.Equal(string.Empty, result);
+        result.Should().BeEmpty();
     }
 
     [Fact]
     public void Reverse_NullInput_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => _sut.Reverse(null!));
+        var act = () => _sut.Reverse(null!);
+
+        act.Should().Throw<ArgumentNullException>();
     }
 
     [Theory]
@@ -36,7 +39,7 @@ public class StringServiceTests
     {
         var result = _sut.IsPalindrome(input);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Theory]
@@ -49,7 +52,7 @@ public class StringServiceTests
     {
         var result = _sut.WordCount(input);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Theory]
@@ -60,6 +63,6 @@ public class StringServiceTests
     {
         var result = _sut.Capitalize(input);
 
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 }

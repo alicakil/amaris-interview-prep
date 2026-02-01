@@ -1,5 +1,7 @@
 using Amaris.Core.Models;
+using Amaris.Core.Repositories;
 using Amaris.Data.Repositories;
+using FluentAssertions;
 
 namespace Amaris.Core.Tests.Repositories;
 
@@ -18,8 +20,8 @@ public class InMemoryRepositoryTests
         _sut.Add(product);
 
         var result = _sut.GetById(1);
-        Assert.NotNull(result);
-        Assert.Equal("Test", result.Name);
+        result.Should().NotBeNull()
+            .And.Subject.As<Product>().Name.Should().Be("Test");
     }
 
     [Fact]
@@ -27,7 +29,9 @@ public class InMemoryRepositoryTests
     {
         _sut.Add(CreateProduct());
 
-        Assert.Throws<InvalidOperationException>(() => _sut.Add(CreateProduct()));
+        var act = () => _sut.Add(CreateProduct());
+
+        act.Should().Throw<InvalidOperationException>();
     }
 
     [Fact]
@@ -35,7 +39,7 @@ public class InMemoryRepositoryTests
     {
         var result = _sut.GetById(999);
 
-        Assert.Null(result);
+        result.Should().BeNull();
     }
 
     [Fact]
@@ -47,7 +51,7 @@ public class InMemoryRepositoryTests
 
         var result = _sut.GetAll().ToList();
 
-        Assert.Equal(3, result.Count);
+        result.Should().HaveCount(3);
     }
 
     [Fact]
@@ -58,13 +62,16 @@ public class InMemoryRepositoryTests
         _sut.Update(CreateProduct(1, "New"));
 
         var result = _sut.GetById(1);
-        Assert.Equal("New", result!.Name);
+        result.Should().NotBeNull()
+            .And.Subject.As<Product>().Name.Should().Be("New");
     }
 
     [Fact]
     public void Update_NonExistent_ThrowsKeyNotFoundException()
     {
-        Assert.Throws<KeyNotFoundException>(() => _sut.Update(CreateProduct(999)));
+        var act = () => _sut.Update(CreateProduct(999));
+
+        act.Should().Throw<KeyNotFoundException>();
     }
 
     [Fact]
@@ -74,12 +81,14 @@ public class InMemoryRepositoryTests
 
         _sut.Delete(1);
 
-        Assert.Null(_sut.GetById(1));
+        _sut.GetById(1).Should().BeNull();
     }
 
     [Fact]
     public void Delete_NonExistent_ThrowsKeyNotFoundException()
     {
-        Assert.Throws<KeyNotFoundException>(() => _sut.Delete(999));
+        var act = () => _sut.Delete(999);
+
+        act.Should().Throw<KeyNotFoundException>();
     }
 }
