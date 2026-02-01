@@ -17,6 +17,8 @@ Amaris.sln
 │   └── Repositories/
 │       ├── IRepository.cs
 │       └── InMemoryRepository.cs
+├── Amaris.Api/                # Minimal API (Presentation)
+│   └── Program.cs
 └── Amaris.Core.Tests/         # xUnit Tests
     ├── Services/
     │   ├── CalculatorServiceTests.cs
@@ -57,6 +59,16 @@ dotnet add tests/ProjectName.Tests reference src/ProjectName
 
 # Add project to solution
 dotnet sln add src/ProjectName
+
+# Run the API
+dotnet run --project Amaris.Api
+
+# Test API endpoints (while API is running)
+curl http://localhost:5038/api/products
+curl -X POST http://localhost:5038/api/products -H "Content-Type: application/json" -d "{\"id\":1,\"name\":\"Laptop\",\"price\":999.99,\"category\":\"Electronics\"}"
+curl http://localhost:5038/api/products/1
+curl -X PUT http://localhost:5038/api/products/1 -H "Content-Type: application/json" -d "{\"id\":1,\"name\":\"Laptop Pro\",\"price\":1299.99,\"category\":\"Electronics\"}"
+curl -X DELETE http://localhost:5038/api/products/1
 ```
 
 ## xUnit Cheat Sheet

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amaris.Core.Tests", "Amaris
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amaris.Data", "Amaris.Data\Amaris.Data.csproj", "{6823EADE-D3A8-4270-90BD-EA4EFBADD29F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amaris.Api", "Amaris.Api\Amaris.Api.csproj", "{BC97540B-D14B-4D35-869C-5001CEC3C318}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{6823EADE-D3A8-4270-90BD-EA4EFBADD29F}.Release|x64.Build.0 = Release|Any CPU
 		{6823EADE-D3A8-4270-90BD-EA4EFBADD29F}.Release|x86.ActiveCfg = Release|Any CPU
 		{6823EADE-D3A8-4270-90BD-EA4EFBADD29F}.Release|x86.Build.0 = Release|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Debug|x64.Build.0 = Debug|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Debug|x86.Build.0 = Debug|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Release|x64.ActiveCfg = Release|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Release|x64.Build.0 = Release|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Release|x86.ActiveCfg = Release|Any CPU
+		{BC97540B-D14B-4D35-869C-5001CEC3C318}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
