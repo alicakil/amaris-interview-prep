@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Amaris.Core\Amaris.Core.csproj" />
+    <ProjectReference Include="..\Amaris.Core\Amaris.Core.csproj" />
+    <ProjectReference Include="..\Amaris.Data\Amaris.Data.csproj" />
   </ItemGroup>
 
 </Project>

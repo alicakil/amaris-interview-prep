@@ -6,15 +6,23 @@
 
 ```
 Amaris.sln
-├── src/Amaris.Core/           # Class Library
-│   ├── Models/Product.cs
+├── Amaris.Core/               # Domain Models & Services
+│   ├── Models/
+│   │   ├── IEntity.cs
+│   │   └── Product.cs
 │   └── Services/
 │       ├── ICalculatorService.cs / CalculatorService.cs
 │       └── IStringService.cs / StringService.cs
-└── tests/Amaris.Core.Tests/   # xUnit Tests
-    └── Services/
-        ├── CalculatorServiceTests.cs
-        └── StringServiceTests.cs
+├── Amaris.Data/               # Data Access Layer
+│   └── Repositories/
+│       ├── IRepository.cs
+│       └── InMemoryRepository.cs
+└── Amaris.Core.Tests/         # xUnit Tests
+    ├── Services/
+    │   ├── CalculatorServiceTests.cs
+    │   └── StringServiceTests.cs
+    └── Repositories/
+        └── InMemoryRepositoryTests.cs
 ```
 
 ## Quick Commands
