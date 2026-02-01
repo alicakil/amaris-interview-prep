@@ -4,8 +4,13 @@ using Amaris.Data.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IRepository<Product>, InMemoryRepository<Product>>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 var products = app.MapGroup("/api/products");
 

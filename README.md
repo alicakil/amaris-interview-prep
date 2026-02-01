@@ -1,201 +1,97 @@
 # Amaris - Interview Preparation Project
 
-.NET 10 solution with xUnit test project.
+.NET 10 | xUnit | Repository Pattern | Minimal API
 
 ## Project Structure
 
 ```
 Amaris.sln
-├── Amaris.Core/               # Domain Models & Services
-│   ├── Models/
-│   │   ├── IEntity.cs
-│   │   └── Product.cs
-│   └── Services/
-│       ├── ICalculatorService.cs / CalculatorService.cs
-│       └── IStringService.cs / StringService.cs
-├── Amaris.Data/               # Data Access Layer
-│   └── Repositories/
-│       ├── IRepository.cs
-│       └── InMemoryRepository.cs
-├── Amaris.Api/                # Minimal API (Presentation)
-│   └── Program.cs
-└── Amaris.Core.Tests/         # xUnit Tests
-    ├── Services/
-    │   ├── CalculatorServiceTests.cs
-    │   └── StringServiceTests.cs
-    └── Repositories/
-        └── InMemoryRepositoryTests.cs
+├── Amaris.Core/          # Domain: Models, Services, Interfaces
+├── Amaris.Data/          # DAL: Generic Repository (InMemory)
+├── Amaris.Api/           # Presentation: Minimal API + Swagger
+└── Amaris.Core.Tests/    # xUnit Tests (36 tests)
 ```
 
-## Quick Commands
+## Commands
 
 ```bash
-# Build
-dotnet build
-
-# Run all tests
-dotnet test
-
-# Run tests with detailed output
-dotnet test --verbosity normal
-
-# Run a specific test class
-dotnet test --filter "CalculatorServiceTests"
-
-# Run a specific test method
-dotnet test --filter "Add_TwoPositiveNumbers_ReturnsSum"
-
-# Run tests matching a pattern
-dotnet test --filter "Divide"
-
-# Add a new class library project
-dotnet new classlib -n ProjectName -o src/ProjectName
-
-# Add a new xunit test project
-dotnet new xunit -n ProjectName.Tests -o tests/ProjectName.Tests
-
-# Add project reference
-dotnet add tests/ProjectName.Tests reference src/ProjectName
-
-# Add project to solution
-dotnet sln add src/ProjectName
-
-# Run the API
-dotnet run --project Amaris.Api
-
-# Test API endpoints (while API is running)
-curl http://localhost:5038/api/products
-curl -X POST http://localhost:5038/api/products -H "Content-Type: application/json" -d "{\"id\":1,\"name\":\"Laptop\",\"price\":999.99,\"category\":\"Electronics\"}"
-curl http://localhost:5038/api/products/1
-curl -X PUT http://localhost:5038/api/products/1 -H "Content-Type: application/json" -d "{\"id\":1,\"name\":\"Laptop Pro\",\"price\":1299.99,\"category\":\"Electronics\"}"
-curl -X DELETE http://localhost:5038/api/products/1
+dotnet build                                    # Build solution
+dotnet test                                     # Run all tests
+dotnet test --filter "CalculatorServiceTests"   # Run specific test class
+dotnet test --filter "Divide"                   # Run tests matching pattern
+dotnet run --project Amaris.Api                 # Run API
 ```
+
+API: `https://localhost:7289/swagger` | `http://localhost:5038/swagger`
 
 ## xUnit Cheat Sheet
 
 ```csharp
-// --- Attributes ---
-[Fact]                                    // Single test case
+[Fact]                                    // Single test
 [Theory]                                  // Parameterized test
-[InlineData(1, 2, 3)]                     // Inline test data for Theory
+[InlineData(1, 2, 3)]                     // Test data
 
-// --- Assertions ---
-Assert.Equal(expected, actual);           // Equality check
-Assert.NotEqual(expected, actual);
+Assert.Equal(expected, actual);
 Assert.True(condition);
-Assert.False(condition);
 Assert.Null(obj);
 Assert.NotNull(obj);
 Assert.Empty(collection);
 Assert.Single(collection);
 Assert.Contains(item, collection);
-Assert.DoesNotContain(item, collection);
-Assert.IsType<ExpectedType>(obj);
-Assert.Throws<ExceptionType>(() => ...);  // Sync exception
-await Assert.ThrowsAsync<T>(async () =>); // Async exception
+Assert.IsType<T>(obj);
+Assert.Throws<T>(() => ...);
 Assert.InRange(actual, low, high);
 
-// --- Test Setup (Constructor / IDisposable) ---
+// Setup / Teardown
 public class MyTests : IDisposable
 {
-    private readonly MyService _sut;
-
-    public MyTests()  // runs before each test
-    {
-        _sut = new MyService();
-    }
-
-    public void Dispose()  // runs after each test
-    {
-        // cleanup
-    }
+    public MyTests() { /* before each */ }
+    public void Dispose() { /* after each */ }
 }
-
-// --- Collection Fixtures (shared context) ---
-[CollectionDefinition("Database")]
-public class DatabaseCollection : ICollectionFixture<DatabaseFixture> { }
-
-[Collection("Database")]
-public class MyTests { }
 ```
 
 ## Git Cheat Sheet
 
 ```bash
-# Status and history
-git status
-git log --oneline
-git log --oneline --graph --all
-git diff
-git diff --staged
+git status                          # Working tree status
+git log --oneline --graph --all     # Visual history
+git diff / git diff --staged        # View changes
 
-# Branching
-git branch                       # list branches
-git branch feature/my-feature    # create branch
-git checkout feature/my-feature  # switch branch
-git checkout -b feature/new      # create + switch
-git merge feature/my-feature     # merge into current branch
-git branch -d feature/done       # delete branch
+git checkout -b feature/new         # Create + switch branch
+git merge feature/branch            # Merge branch
+git branch -d feature/done          # Delete branch
 
-# Staging and committing
-git add .                        # stage all
-git add src/MyFile.cs            # stage specific file
-git commit -m "message"
-git commit -am "message"         # stage tracked + commit
+git add . / git add file.cs         # Stage changes
+git commit -m "message"             # Commit
+git push origin main                # Push
 
-# Remote
-git remote -v
-git push origin main
-git pull origin main
-git fetch
-
-# Undo
-git checkout -- file.cs          # discard unstaged changes
-git reset HEAD file.cs           # unstage a file
-git reset --soft HEAD~1          # undo last commit, keep changes staged
-git stash                        # stash changes
-git stash pop                    # apply stashed changes
-
-# Tags
-git tag v1.0.0
-git tag -a v1.0.0 -m "Release"
+git reset --soft HEAD~1             # Undo last commit (keep changes)
+git stash / git stash pop           # Stash changes
 ```
 
 ## C# Quick Reference
 
 ```csharp
-// Interface
-public interface IMyService { string DoWork(int id); }
-
-// Implementation
-public class MyService : IMyService
+// Interface + Implementation
+public interface IService { string Do(int id); }
+public class Service : IService
 {
-    public string DoWork(int id) => $"Result: {id}";
+    public string Do(int id) => $"Result: {id}";
 }
 
-// Records (immutable data)
+// Record, Pattern Matching, Null Safety
 public record Person(string Name, int Age);
 
-// Pattern matching
-var result = obj switch
-{
-    int n when n > 0 => "positive",
-    int n when n < 0 => "negative",
-    _ => "zero"
-};
+var r = obj switch { int n when n > 0 => "+", _ => "-" };
 
-// Null safety
 ArgumentNullException.ThrowIfNull(param);
 string name = input ?? "default";
-int length = input?.Length ?? 0;
 
 // LINQ
-var filtered = items.Where(x => x.IsActive);
-var mapped = items.Select(x => x.Name);
-var first = items.FirstOrDefault(x => x.Id == 1);
-var grouped = items.GroupBy(x => x.Category);
-var ordered = items.OrderBy(x => x.Name).ThenBy(x => x.Age);
-bool any = items.Any(x => x.Price > 100);
-int count = items.Count(x => x.IsActive);
-decimal sum = items.Sum(x => x.Price);
+items.Where(x => x.Active).Select(x => x.Name);
+items.FirstOrDefault(x => x.Id == 1);
+items.GroupBy(x => x.Category);
+items.OrderBy(x => x.Name).ThenBy(x => x.Age);
+items.Any(x => x.Price > 100);
+items.Sum(x => x.Price);
 ```
