@@ -7,8 +7,14 @@
 ```
 Amaris.sln
 ├── Amaris.Core/          # Domain: Models, Services, Interfaces
-├── Amaris.Data/          # DAL: Generic Repository (InMemory)
+│   ├── Models/           # Product
+│   ├── Repositories/     # IProductRepository
+│   └── Services/         # Calculator, String, Product services
+├── Amaris.Data/          # DAL: InMemoryProductRepository
 ├── Amaris.Api/           # Presentation: Minimal API + Swagger
+│   ├── DTOs/             # CreateProductRequest, ProductResponse
+│   ├── Endpoints/        # ProductEndpoints
+│   └── Middleware/       # ExceptionMiddleware
 └── Amaris.Core.Tests/    # xUnit + FluentAssertions + Moq (52 tests)
 ```
 

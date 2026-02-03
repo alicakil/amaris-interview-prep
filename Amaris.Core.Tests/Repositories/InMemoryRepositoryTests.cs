@@ -5,15 +5,15 @@ using FluentAssertions;
 
 namespace Amaris.Core.Tests.Repositories;
 
-public class InMemoryRepositoryTests
+public class InMemoryProductRepositoryTests
 {
-    private readonly IRepository<Product> _sut = new InMemoryRepository<Product>();
+    private readonly IProductRepository _sut = new InMemoryProductRepository();
 
     private static Product CreateProduct(int id = 1, string name = "Test", decimal price = 9.99m)
         => new() { Id = id, Name = name, Price = price, Category = "General" };
 
     [Fact]
-    public void Add_NewEntity_CanBeRetrievedById()
+    public void Add_NewProduct_CanBeRetrievedById()
     {
         var product = CreateProduct();
 
@@ -43,7 +43,7 @@ public class InMemoryRepositoryTests
     }
 
     [Fact]
-    public void GetAll_MultipleEntities_ReturnsAll()
+    public void GetAll_MultipleProducts_ReturnsAll()
     {
         _sut.Add(CreateProduct(1, "A"));
         _sut.Add(CreateProduct(2, "B"));
@@ -55,7 +55,7 @@ public class InMemoryRepositoryTests
     }
 
     [Fact]
-    public void Update_ExistingEntity_ReflectsChanges()
+    public void Update_ExistingProduct_ReflectsChanges()
     {
         _sut.Add(CreateProduct(1, "Old"));
 
@@ -75,7 +75,7 @@ public class InMemoryRepositoryTests
     }
 
     [Fact]
-    public void Delete_ExistingEntity_RemovesIt()
+    public void Delete_ExistingProduct_RemovesIt()
     {
         _sut.Add(CreateProduct());
 

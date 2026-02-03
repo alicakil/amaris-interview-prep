@@ -1,6 +1,6 @@
 namespace Amaris.Core.Models;
 
-public class Product : IEntity
+public class Product
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

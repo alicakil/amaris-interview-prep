@@ -5,9 +5,9 @@ namespace Amaris.Core.Services;
 
 public class ProductService : IProductService
 {
-    private readonly IRepository<Product> _repository;
+    private readonly IProductRepository _repository;
 
-    public ProductService(IRepository<Product> repository)
+    public ProductService(IProductRepository repository)
     {
         _repository = repository;
     }

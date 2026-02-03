@@ -17,7 +17,7 @@ namespace Amaris.Core.Tests.Services;
 /// </summary>
 public class ProductServiceTests
 {
-    private readonly Mock<IRepository<Product>> _repoMock;
+    private readonly Mock<IProductRepository> _repoMock;
     private readonly ProductService _sut;
     private readonly Fixture _fixture;
 
@@ -27,7 +27,7 @@ public class ProductServiceTests
     /// </summary>
     public ProductServiceTests()
     {
-        _repoMock = new Mock<IRepository<Product>>();
+        _repoMock = new Mock<IProductRepository>();
         _sut = new ProductService(_repoMock.Object);
         _fixture = new Fixture();
     }
