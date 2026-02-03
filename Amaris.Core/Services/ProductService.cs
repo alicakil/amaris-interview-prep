@@ -3,14 +3,9 @@ using Amaris.Core.Repositories;
 
 namespace Amaris.Core.Services;
 
-public class ProductService : IProductService
+public class ProductService(IProductRepository repository) : IProductService
 {
-    private readonly IProductRepository _repository;
-
-    public ProductService(IProductRepository repository)
-    {
-        _repository = repository;
-    }
+    private readonly IProductRepository _repository = repository;
 
     public Product? GetById(int id) => _repository.GetById(id);
 
