@@ -1,6 +1,7 @@
 using Amaris.Api.Endpoints;
 using Amaris.Api.Middleware;
 using Amaris.Core.Repositories;
+using Amaris.Data;
 using Amaris.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ app.UseMiddleware<RequestHeaderLoggingMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
+
+SeedData.Initialize(app.Services.GetRequiredService<IProductRepository>());
 
 app.MapProductEndpoints();
 
