@@ -1,6 +1,6 @@
 # Amaris - Interview Preparation Project
 
-.NET 10 | xUnit | Repository Pattern | Minimal API
+.NET 10 | xUnit | FluentAssertions | Moq | Repository Pattern | Minimal API
 
 ## Project Structure
 
@@ -9,7 +9,7 @@ Amaris.sln
 ├── Amaris.Core/          # Domain: Models, Services, Interfaces
 ├── Amaris.Data/          # DAL: Generic Repository (InMemory)
 ├── Amaris.Api/           # Presentation: Minimal API + Swagger
-└── Amaris.Core.Tests/    # xUnit Tests (36 tests)
+└── Amaris.Core.Tests/    # xUnit + FluentAssertions + Moq (52 tests)
 ```
 
 ## Commands
@@ -24,23 +24,52 @@ dotnet run --project Amaris.Api                 # Run API
 
 API: `https://localhost:7289/swagger` | `http://localhost:5038/swagger`
 
-## xUnit Cheat Sheet
+## xUnit + FluentAssertions Cheat Sheet
 
 ```csharp
 [Fact]                                    // Single test
 [Theory]                                  // Parameterized test
-[InlineData(1, 2, 3)]                     // Test data
+[InlineData(1, 2, 3)]                     // Inline test data
+[MemberData(nameof(TestData))]            // Complex test data
+[Theory, AutoData]                        // AutoFixture random data
 
-Assert.Equal(expected, actual);
-Assert.True(condition);
-Assert.Null(obj);
-Assert.NotNull(obj);
-Assert.Empty(collection);
-Assert.Single(collection);
-Assert.Contains(item, collection);
-Assert.IsType<T>(obj);
-Assert.Throws<T>(() => ...);
-Assert.InRange(actual, low, high);
+// --- FluentAssertions ---
+result.Should().Be(expected);
+result.Should().NotBe(value);
+result.Should().BeTrue();
+result.Should().BeNull();
+result.Should().NotBeNull();
+text.Should().BeEmpty();
+text.Should().Contain("sub");
+
+// Collections
+list.Should().HaveCount(3);
+list.Should().BeEmpty();
+list.Should().ContainSingle();
+list.Should().Contain(item);
+list.Should().AllSatisfy(x => x.Active.Should().BeTrue());
+list.Should().BeInDescendingOrder(x => x.Price);
+
+// Exceptions
+var act = () => sut.Method();
+act.Should().Throw<ArgumentException>()
+    .WithMessage("*required*")
+    .WithParameterName("name");
+
+// --- Moq ---
+var mock = new Mock<IRepository<T>>();
+mock.Setup(r => r.GetById(1)).Returns(entity);
+mock.Setup(r => r.GetAll()).Returns(list);
+mock.Setup(r => r.GetById(It.IsAny<int>())).Returns(entity);
+mock.Verify(r => r.Add(entity), Times.Once);
+mock.Verify(r => r.Add(It.IsAny<T>()), Times.Never);
+
+// --- AutoFixture ---
+var fixture = new Fixture();
+var product = fixture.Create<Product>();              // Random object
+var products = fixture.CreateMany<Product>(5);        // Random list
+var custom = fixture.Build<Product>()
+    .With(p => p.Price, 99m).Create();                // Partial control
 
 // Setup / Teardown
 public class MyTests : IDisposable

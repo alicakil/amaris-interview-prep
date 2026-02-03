@@ -1,3 +1,4 @@
+using Amaris.Api.Middleware;
 using Amaris.Core.Models;
 using Amaris.Core.Repositories;
 using Amaris.Data.Repositories;
@@ -10,6 +11,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
